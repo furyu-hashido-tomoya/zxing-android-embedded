@@ -143,6 +143,14 @@ public final class CameraManager {
         int cameraId = OpenCameraInterface.getCameraId(settings.getRequestedCameraId());
         cameraInfo = new Camera.CameraInfo();
         Camera.getCameraInfo(cameraId, cameraInfo);
+
+        // 初期化時にデフォルトのズームを最大ズーム倍率÷２とします
+        Camera.Parameters parameters = camera.getParameters();
+        int positionMaxZoom = parameters.getMaxZoom();
+        int maxZoomRatio = parameters.getZoomRatios().get(positionMaxZoom);
+        double targetZoomRatio = (maxZoomRatio / 2) * 0.01;
+        CameraConfigurationUtils.setZoom(parameters, targetZoomRatio);
+        camera.setParameters(parameters);
     }
 
     /**
