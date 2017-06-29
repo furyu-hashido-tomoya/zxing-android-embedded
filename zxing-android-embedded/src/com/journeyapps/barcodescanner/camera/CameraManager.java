@@ -148,7 +148,7 @@ public final class CameraManager {
         Camera.Parameters parameters = camera.getParameters();
         int positionMaxZoom = parameters.getMaxZoom();
         int maxZoomRatio = parameters.getZoomRatios().get(positionMaxZoom);
-        double targetZoomRatio = (maxZoomRatio / 2) * 0.01;
+        double targetZoomRatio = Math.min((maxZoomRatio / 2) * 0.01, 4);
         CameraConfigurationUtils.setZoom(parameters, targetZoomRatio);
         camera.setParameters(parameters);
     }
